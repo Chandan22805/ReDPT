@@ -1,0 +1,88 @@
+1. Global Scope 
+    List of deadlines
+    Current time/today's date
+    Info about deadlines
+
+2. Deadline object
+    Id :
+        A universal identifier of the task for the system. 
+        Eg; TD0001
+    Title : 
+        Name given to the dealine object.
+        Eg : Finish building this application
+    Description :
+        A brief summary of what the task is just in case the title doesn't justify.
+        Eg : Complete setup and deployment of the application accessible through web to anyone
+    CreatedAt :
+        The date of creation of the deadline.
+        Eg : 09-02-2026
+    DueDate(days remaining can be calculated using due DueDate).
+        The last date or the deadline.
+        Eg: 14-02-2026
+    Status(Completed, Active , Deadline passed(negative days)).
+        The current status of the task.
+        Eg : Active
+    CompletedAt(null in the inital times when completed show time)(v2)
+        The date the task was completed on.
+        Eg : 13-02-2026
+
+3. Deadline State Transistions 
+    
+    Active -> Completed : If the user clicks on the complete task.
+    Active -> Failed : If the currDate > dueDate and status is Active.
+    Failed -> Completed : If the task is already in failed state with negative number of days till deadline and the user clicks complete.
+    Failed -> Active : If the user edits the deadline and the date is in the future than the current date.
+    Completed -> Active : Not possible in v1.
+    Completed -> Failed : Not possible in v1.
+    On app load and on every render, recompute status of all Active deadlines based on current date.
+
+4. What Happens When the App Loads?
+
+    The app loads and:
+        1. Load saved data
+        2. Get today's date
+        3. Check deadlines
+        4. Show list on screen
+
+5. When should the deadline be recalculated ?
+
+    Status should be recalucated 
+        1. On page load
+        2. When user adds a task  
+        3. User edits a task
+        4. User clicks complete
+        5. The clock hits 12:00 when user is Active
+
+6. What does "Add Deadline" do ?
+
+    1. Create object
+    2. Add to list
+    3. Save
+    4. Re-render
+
+7. What does "Mark Completed" do ?
+
+    When user clicks "Complete" 
+        1. Status changes to Completed
+        2. Stops calculating deadline or days once done.
+        3. Puts it into a seperate list.
+
+8. How do you calculate "Days Remaining"?
+
+    Input: 
+        dueDate,currentDate
+    
+    Output: 
+        daysRemaining 
+    
+    Condition:
+        If daysremaining < 0 , then :
+            status = Failed
+    
+9. When does the UI update?
+
+    1. When page loads.
+    2. After adding a new deadline object.
+    3. After editing a deadline object.
+    4. After deleting a deadline object.
+    5. After status of a a deadline object changes.
