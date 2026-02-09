@@ -32,7 +32,8 @@ function addDeadline(data){
         dueDate        : data.dueDate,
         status         : now < data.dueDate ? 'Active' : 'Failed',
         completedAt    : null,
-        daysRemaining  : calculateDaysRemaining(Date.now(), data.dueDate())
+        completed      : false,
+        daysRemaining  : calculateDaysRemaining(data.dueDate())
     }
     deadlines.push(newDeadline);
     saveData();
@@ -41,18 +42,38 @@ function addDeadline(data){
 
 function recomputeStatuses(){
     for(let i=0; i<deadlines.length; i++){
-        deadlines[i].status = Date.now() < deadlines[i].dueDate ? "Active" : "Failed";
-        deadlines[i].daysRemaining = calculateDaysRemaining(Date.now(), deadlines[i].dueDate);
+        deadlines[i].daysRemaining = calculateDaysRemaining(deadlines[i].dueDate);
+        if(!deadlines[i].completed)
+            deadlines[i].status = Date.now() < deadlines[i].dueDate ? "Active" : "Failed";
     }
 };
 
-function editDeadline(id, data){};
+function editDeadline(id, dueDate){
+    deadlines = deadlines.map(d1 => {
+        if(d1.id === id){
+            d1.dueDate = dueDate;
+            d1.daysRemaining = calculateDaysRemaining(dueDate);
+            if(!d1.completed) recomputeStatuses();
+        }
+    })
+};
 
-function deleteDeadline(id){};
+function deleteDeadline(id){
+    deadlines = deadlines.filter(dl => dl.id !== id);
+};
 
-function markCompleted(id){};
+function markCompleted(id){
+    deadlines = deadlines.map(d1 =>
+        {
+            if(d1.id===id){
+                 d1.completetd = true;
+                 d1.completedAt = Date.now();
+                 d1.status = "Completed"; 
+            }
+    })
+};
 
-function calculateDaysRemaining(currentDate, dueDate){
+function calculateDaysRemaining(dueDate){
     const msInDay = 24 * 60 * 60 * 1000;
-    return Math.ceil((dueDate - currentDate) / msInDay);
+    return Math.ceil((dueDate - Date.now()) / msInDay);
 };
