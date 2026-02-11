@@ -4,12 +4,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel = "stylesheet" href = "style.css">
         <script src = "script.js"></script>
-        <title>RedPT</title>
+        <title>ReDPT</title>
     </head>
 
     <body onload="initApp()">
         <header>
+                <div class="logo" onclick="location.reload()">RedPT</div>
+                <button class="add-btn" onclick="promptAdd()">Add</button>
         </header>
-        <div class = "container"></div>
+        <div class = "container">
+            <div id = "deadlinesList">
+
+            </div>
+        </div>
     </body>
 </html>
