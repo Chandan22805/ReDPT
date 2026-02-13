@@ -9,13 +9,35 @@
 
     <body onload="initApp()">
         <header>
-                <div class="logo" onclick="location.reload()">RedPT</div>
+                <img src="image.png">
+                <div class="logo" onclick="renderApp()">RedPT</div>
                 <button class="add-btn" onclick="promptAdd()">Add</button>
         </header>
-        <div class = "container">
-            <div id = "deadlinesList">
+        <div id="intro" class="intro">
+            <div class="intro-title">What is this?</div>
+            <div class="intro-text">
+                This visualizes your deadlines. Each card is a task.
+            </div>
 
+            <div class="intro-legend">
+                <div class="legend-item">
+                    <span class="day-box month"></span>
+                    <span>Red block = Remaining months</span>
+                </div>
+                <div class="legend-item">
+                    <span class="day-box day"></span>
+                    <span>Green block = Remaining days</span>
+                </div>
             </div>
         </div>
+
+
+        <div class = "container">
+            <div id = "deadlinesList">
+            </div>
+        </div>
+        <footer>
+            <p><img src="image.png"> Built by Chandan R</p>
+        </footer>
     </body>
 </html>
